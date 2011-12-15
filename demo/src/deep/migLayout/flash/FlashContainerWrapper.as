@@ -18,6 +18,8 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
 	internal var h:int;
 
 	private const _components:Vector.<ComponentWrapper> = new Vector.<ComponentWrapper>();
+	
+	private var _cont:DisplayObjectContainer;
 
 	override public function getPreferredWidth(hHint:int = -1):int
 	{
@@ -31,6 +33,7 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
 
 	function FlashContainerWrapper(c:DisplayObjectContainer, layout:MigLayout)
 	{
+		_cont = c;
 		super(c, null);
 		_layout = layout;
 	}
@@ -75,16 +78,39 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
 
 	public function add(component:DisplayObject, constraints:Object = null):void
 	{
+		if (getComponentWrapper(component)) return;
 		constraints ||= "";
 		var componentConstraints:CC = constraints is String ? ConstraintParser.parseComponentConstraint(String(constraints)) : CC(constraints);
 		var wrapperRef:Class = ComponentBuilder.getComponentWrapper(component);
 		if (wrapperRef)
 		{
 			_components[_components.length] = new wrapperRef(component, componentConstraints);
-			DisplayObjectContainer(c).addChild(component);
+			_cont.addChild(component);
 		}
 
 		invalidate();
+	}
+	
+	public function remove(component:DisplayObject):Boolean
+	{
+		var wrapper:FlashComponentWrapper = getComponentWrapper(component);
+		if (wrapper)
+		{
+			_cont.removeChild(component);
+			_components.splice(_components.indexOf(wrapper), 1);
+			invalidate();
+			return true;
+		}
+		return false;
+	}
+	
+	public function getComponentWrapper(component:DisplayObject):FlashComponentWrapper
+	{
+		for each (var w:FlashComponentWrapper in _components)
+		{
+			if (w.component == component) return w;
+		}
+		return null;
 	}
 
 	public function layoutContainer():void

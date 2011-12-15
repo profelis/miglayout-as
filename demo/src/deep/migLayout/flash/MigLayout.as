@@ -38,7 +38,7 @@ public class MigLayout extends AbstractMigLayout
 			w = LayoutUtil.getSizeSafe(grid != null ? grid.width : null, LayoutUtil.PREF);
 			h = LayoutUtil.getSizeSafe(grid != null ? grid.height : null, LayoutUtil.PREF);
 		}
-
+		
 		container.w = w;
 		container.h = h;
 
