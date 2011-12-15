@@ -13,59 +13,59 @@ import net.miginfocom.layout.ComponentType;
  */
 public class BitmapWrapper extends FlashComponentWrapper
 {
-	private var _bitmap:Bitmap;
+    private var _bitmap:Bitmap;
 
-	public function BitmapWrapper(c:Bitmap, constraints:CC)
-	{
-		_bitmap = c;
-		super(c, constraints);
-	}
+    public function BitmapWrapper(c:Bitmap, constraints:CC)
+    {
+        _bitmap = c;
+        super(c, constraints);
+    }
 
-	override public function getPreferredWidth(hHint:int = -1):int
-	{
-		if (_bitmap.bitmapData) return _bitmap.bitmapData.width;
+    override public function getPreferredWidth(hHint:int = -1):int
+    {
+        if (_bitmap.bitmapData) return _bitmap.bitmapData.width;
 
-		return super.getPreferredWidth(hHint);
-	}
+        return super.getPreferredWidth(hHint);
+    }
 
-	override public function getPreferredHeight(wHint:int = -1):int
-	{
-		if (_bitmap.bitmapData) return _bitmap.bitmapData.height;
+    override public function getPreferredHeight(wHint:int = -1):int
+    {
+        if (_bitmap.bitmapData) return _bitmap.bitmapData.height;
 
-		return super.getPreferredHeight(wHint);
-	}
+        return super.getPreferredHeight(wHint);
+    }
 
-	override public function getMinimumWidth(hHint:int = -1):int
-	{
-		if (_bitmap.bitmapData) return _bitmap.bitmapData.width;
+    override public function getMinimumWidth(hHint:int = -1):int
+    {
+        if (_bitmap.bitmapData) return _bitmap.bitmapData.width;
 
-		return super.getMinimumWidth(hHint);
-	}
+        return super.getMinimumWidth(hHint);
+    }
 
-	override public function getMinimumHeight(wHint:int = -1):int
-	{
-		if (_bitmap.bitmapData) return _bitmap.bitmapData.height;
+    override public function getMinimumHeight(wHint:int = -1):int
+    {
+        if (_bitmap.bitmapData) return _bitmap.bitmapData.height;
 
-		return super.getMinimumHeight(wHint);
-	}
+        return super.getMinimumHeight(wHint);
+    }
 
-	override public function getMaximumWidth(hHint:int = -1):int
-	{
-		if (_bitmap.bitmapData) return _bitmap.bitmapData.width;
+    override public function getMaximumWidth(hHint:int = -1):int
+    {
+        if (_bitmap.bitmapData) return _bitmap.bitmapData.width;
 
-		return _bitmap.width / _bitmap.scaleX;
-	}
+        return _bitmap.width / _bitmap.scaleX;
+    }
 
-	override public function getMaximumHeight(wHint:int = -1):int
-	{
-		if (_bitmap.bitmapData) return _bitmap.bitmapData.height;
+    override public function getMaximumHeight(wHint:int = -1):int
+    {
+        if (_bitmap.bitmapData) return _bitmap.bitmapData.height;
 
-		return _bitmap.height / _bitmap.scaleY;
-	}
+        return _bitmap.height / _bitmap.scaleY;
+    }
 
-	override public function getComponentType(disregardScrollPane:Boolean):int
-	{
-		return ComponentType.TYPE_IMAGE;
-	}
+    override public function getComponentType(disregardScrollPane:Boolean):int
+    {
+        return ComponentType.TYPE_IMAGE;
+    }
 }
 }

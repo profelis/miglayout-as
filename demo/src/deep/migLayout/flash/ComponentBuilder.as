@@ -15,60 +15,60 @@ import flash.utils.getQualifiedSuperclassName;
  */
 final public class ComponentBuilder
 {
-	private static var _wrapperRefs:Dictionary = new Dictionary();
+    private static var _wrapperRefs:Dictionary = new Dictionary();
 
-	{
-		registerComponentWrapper(DisplayObject, FlashComponentWrapper);
-		registerComponentWrapper(TextField, TextFieldWrapper);
-		registerComponentWrapper(Bitmap, BitmapWrapper);
-	}
+    {
+        registerComponentWrapper(DisplayObject, FlashComponentWrapper);
+        registerComponentWrapper(TextField, TextFieldWrapper);
+        registerComponentWrapper(Bitmap, BitmapWrapper);
+    }
 
-	static public function registerComponentWrapper(component:Class, wrapperRef:Class):void
-	{
-		_wrapperRefs[component] = wrapperRef;
-	}
+    static public function registerComponentWrapper(component:Class, wrapperRef:Class):void
+    {
+        _wrapperRefs[component] = wrapperRef;
+    }
 
-	static public function unRegisterComponent(component:Class):Boolean
-	{
-		if (component in _wrapperRefs)
-		{
-			delete _wrapperRefs[component];
-			return true;
-		}
-		return false;
-	}
+    static public function unRegisterComponent(component:Class):Boolean
+    {
+        if (component in _wrapperRefs)
+        {
+            delete _wrapperRefs[component];
+            return true;
+        }
+        return false;
+    }
 
-	static public function unRegisterWrapper(wrapperRef:Class):Boolean
-	{
-		var res:Boolean = false;
-		for (var compRef:Object in _wrapperRefs)
-		{
-			if (_wrapperRefs[compRef] == wrapperRef)
-			{
-				delete _wrapperRefs[compRef];
-				res = true;
-			}
-		}
-		return res;
-	}
+    static public function unRegisterWrapper(wrapperRef:Class):Boolean
+    {
+        var res:Boolean = false;
+        for (var compRef:Object in _wrapperRefs)
+        {
+            if (_wrapperRefs[compRef] == wrapperRef)
+            {
+                delete _wrapperRefs[compRef];
+                res = true;
+            }
+        }
+        return res;
+    }
 
-	static public function getComponentWrapper(component:Object):Class
-	{
-		var ref:Class = component.constructor;
-		do
-		{
-			if (ref in _wrapperRefs) return _wrapperRefs[ref];
-			try
-			{
-				ref = getDefinitionByName(getQualifiedSuperclassName(ref)) as Class;
-			}
-			catch (e:Error)
-			{
-				return null;
-			}
-		} while (ref != null);
+    static public function getComponentWrapper(component:Object):Class
+    {
+        var ref:Class = component.constructor;
+        do
+        {
+            if (ref in _wrapperRefs) return _wrapperRefs[ref];
+            try
+            {
+                ref = getDefinitionByName(getQualifiedSuperclassName(ref)) as Class;
+            }
+            catch (e:Error)
+            {
+                return null;
+            }
+        } while (ref != null);
 
-		return null;
-	}
+        return null;
+    }
 }
 }

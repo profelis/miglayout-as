@@ -10,114 +10,114 @@ import net.miginfocom.layout.PlatformDefaults;
 
 public class MigLayout extends AbstractMigLayout
 {
-	private var lastHash:int = -1;
-	private var lastInvalidW:Number;
-	private var lastInvalidH:Number;
-	private var _callbacks:Vector.<LayoutCallback>;
+    private var lastHash:int = -1;
+    private var lastInvalidW:Number;
+    private var lastInvalidH:Number;
+    private var _callbacks:Vector.<LayoutCallback>;
 
-	public function MigLayout(layoutConstraints:String = null, colConstraints:String = null, rowConstraints:String = null)
-	{
-		_callbacks = new Vector.<LayoutCallback>();
-		super(layoutConstraints, colConstraints, rowConstraints);
-	}
+    public function MigLayout(layoutConstraints:String = null, colConstraints:String = null, rowConstraints:String = null)
+    {
+        _callbacks = new Vector.<LayoutCallback>();
+        super(layoutConstraints, colConstraints, rowConstraints);
+    }
 
-	public function layoutContainer(container:FlashContainerWrapper):void
-	{
-		checkCache(container);
+    public function layoutContainer(container:FlashContainerWrapper):void
+    {
+        checkCache(container);
 
-		var w:Number;
-		var h:Number;
-		var o:DisplayObjectContainer = DisplayObjectContainer(container.component);
-		if (o.parent == o.stage)
-		{
-			w = o.stage.stageWidth;
-			h = o.stage.stageHeight;
-		}
-		else
-		{
-			w = LayoutUtil.getSizeSafe(grid != null ? grid.width : null, LayoutUtil.PREF);
-			h = LayoutUtil.getSizeSafe(grid != null ? grid.height : null, LayoutUtil.PREF);
-		}
-		
-		container.w = w;
-		container.h = h;
+        var w:Number;
+        var h:Number;
+        var o:DisplayObjectContainer = DisplayObjectContainer(container.component);
+        if (o.parent == o.stage)
+        {
+            w = o.stage.stageWidth;
+            h = o.stage.stageHeight;
+        }
+        else
+        {
+            w = LayoutUtil.getSizeSafe(grid != null ? grid.width : null, LayoutUtil.PREF);
+            h = LayoutUtil.getSizeSafe(grid != null ? grid.height : null, LayoutUtil.PREF);
+        }
 
-		if (grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, true))
-		{
-			grid = null;
-			checkCache(container);
-			grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, false);
-		}
-	}
+        container.w = w;
+        container.h = h;
 
-	/** Check if something has changed and if so recreate it to the cached objects.
-	 * @param container The container that is the target for this layout manager.
-	 */
-	private function checkCache(container:FlashContainerWrapper):void
-	{
-		if (container == null)
-		{
-			return;
-		}
+        if (grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, true))
+        {
+            grid = null;
+            checkCache(container);
+            grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, false);
+        }
+    }
 
-		if ((flags & INVALID) != 0)
-		{
-			grid = null;
-		}
+    /** Check if something has changed and if so recreate it to the cached objects.
+     * @param container The container that is the target for this layout manager.
+     */
+    private function checkCache(container:FlashContainerWrapper):void
+    {
+        if (container == null)
+        {
+            return;
+        }
 
-		// Check if the grid is valid
-		var mc:int = PlatformDefaults.modCount;
-		if (lastModCount != mc)
-		{
-			grid = null;
-			lastModCount = mc;
-		}
+        if ((flags & INVALID) != 0)
+        {
+            grid = null;
+        }
 
-		var hash:int = 0;
-		for each (var componentWrapper:FlashComponentWrapper in container.components)
-		{
-			hash ^= componentWrapper.layoutHashCode;
-			hash += 285134905;
-		}
+        // Check if the grid is valid
+        var mc:int = PlatformDefaults.modCount;
+        if (lastModCount != mc)
+        {
+            grid = null;
+            lastModCount = mc;
+        }
 
-		if (hash != lastHash)
-		{
-			grid = null;
-			lastHash = hash;
-		}
+        var hash:int = 0;
+        for each (var componentWrapper:FlashComponentWrapper in container.components)
+        {
+            hash ^= componentWrapper.layoutHashCode;
+            hash += 285134905;
+        }
 
-		if (lastInvalidW != container.actualWidth || lastInvalidH != container.actualHeight)
-		{
-			if (grid != null)
-			{
-				grid.invalidateContainerSize();
-			}
+        if (hash != lastHash)
+        {
+            grid = null;
+            lastHash = hash;
+        }
 
-			lastInvalidW = container.actualWidth;
-			lastInvalidH = container.actualHeight;
-		}
+        if (lastInvalidW != container.actualWidth || lastInvalidH != container.actualHeight)
+        {
+            if (grid != null)
+            {
+                grid.invalidateContainerSize();
+            }
 
-		//setDebug(par, getDebugMillis() > 0);
+            lastInvalidW = container.actualWidth;
+            lastInvalidH = container.actualHeight;
+        }
 
-		if (grid == null)
-		{
-			grid = new Grid(container, lc, rowSpecs, colSpecs, _callbacks);
-		}
+        //setDebug(par, getDebugMillis() > 0);
 
-		flags &= ~INVALID;
-	}
+        if (grid == null)
+        {
+            grid = new Grid(container, lc, rowSpecs, colSpecs, _callbacks);
+        }
 
-	public function addLayoutCallback(lc:LayoutCallback):void
-	{
-		_callbacks.push(lc);
-	}
+        flags &= ~INVALID;
+    }
 
-	//private function calculateSize(container:FlashContainerWrapper, sizeType:int) {
-	//  checkCache(container);
-	//  var w:Number = LayoutUtil.getSizeSafe(grid != null ? grid.width : null, sizeType);
-	//  var h:Number = LayoutUtil.getSizeSafe(grid != null ? grid.height : null, sizeType);
-	//  return new Dimension(w, h);
-	//}
+    public function addLayoutCallback(lc:LayoutCallback):void
+    {
+        _callbacks.push(lc);
+    }
+
+    //private function calculateSize(container:FlashContainerWrapper, sizeType:int) {
+    //  checkCache(container);
+    //  var w:Number = LayoutUtil.getSizeSafe(grid != null ? grid.width : null, sizeType);
+    //  var h:Number = LayoutUtil.getSizeSafe(grid != null ? grid.height : null, sizeType);
+    //  return new Dimension(w, h);
+    //}
 }
 }
 

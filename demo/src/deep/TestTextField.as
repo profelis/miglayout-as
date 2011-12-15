@@ -9,25 +9,25 @@ import flash.text.TextFieldType;
  */
 public class TestTextField extends TextField
 {
-	public function TestTextField(text:String, input:Boolean = false)
-	{
-		super();
-				
-		if (input)
-		{
-			type = TextFieldType.INPUT;
-			border = true;
-			height = 20;
-			multiline = false;
-		}
-		else
-		{
-			autoSize = TextFieldAutoSize.LEFT;
-			multiline = true;
-			selectable = true;
-		}
-		
-		this.text = text;
-	}
+    public function TestTextField(text:String, input:Boolean = false)
+    {
+        super();
+
+        if (input)
+        {
+            type = TextFieldType.INPUT;
+            border = true;
+            height = 20;
+            multiline = false;
+        }
+        else
+        {
+            autoSize = TextFieldAutoSize.LEFT;
+            multiline = true;
+            selectable = true;
+        }
+
+        this.text = text;
+    }
 }
 }

@@ -13,53 +13,53 @@ import flash.events.Event;
 
 public class FlashMain extends Sprite
 {
-	private var containerWrapper:FlashContainerWrapper;
+    private var containerWrapper:FlashContainerWrapper;
 
-	public function FlashMain()
-	{
-		construct();
-	}
+    public function FlashMain()
+    {
+        construct();
+    }
 
-	private function construct():void
-	{
-		stage.scaleMode = StageScaleMode.NO_SCALE;
-		stage.align = StageAlign.TOP_LEFT;
+    private function construct():void
+    {
+        stage.scaleMode = StageScaleMode.NO_SCALE;
+        stage.align = StageAlign.TOP_LEFT;
 
-		var layout:MigLayout = new MigLayout("debug, wrap 4, ins 20", "[align right][grow][][grow]");
-		containerWrapper = new FlashContainerWrapper(this, layout);
+        var layout:MigLayout = new MigLayout("debug, wrap 4, ins 20", "[align right][grow][][grow]");
+        containerWrapper = new FlashContainerWrapper(this, layout);
 
-		var lblFirstName:TestTextField = new TestTextField("Fist name");
-		containerWrapper.add(lblFirstName);
+        var lblFirstName:TestTextField = new TestTextField("Fist name");
+        containerWrapper.add(lblFirstName);
 
-		var textField:TestTextField = new TestTextField("", true);
-		containerWrapper.add(textField, "grow");
+        var textField:TestTextField = new TestTextField("", true);
+        containerWrapper.add(textField, "grow");
 
-		var lblNewLabel_1:TestTextField = new TestTextField("Surname");
-		containerWrapper.add(lblNewLabel_1);
+        var lblNewLabel_1:TestTextField = new TestTextField("Surname");
+        containerWrapper.add(lblNewLabel_1);
 
-		var textField_1:TextInput = new TextInput();
-		containerWrapper.add(textField_1, "grow");
+        var textField_1:TextInput = new TextInput();
+        containerWrapper.add(textField_1, "grow");
 
-		var lblNewLabel:TestTextField = new TestTextField("Adress");
-		containerWrapper.add(lblNewLabel);
+        var lblNewLabel:TestTextField = new TestTextField("Adress");
+        containerWrapper.add(lblNewLabel);
 
-		var textField_2:TestTextField = new TestTextField("", true);
-		containerWrapper.add(textField_2, "sx 3, grow");
+        var textField_2:TestTextField = new TestTextField("", true);
+        containerWrapper.add(textField_2, "sx 3, grow");
 
-		var ok:Button = new Button();
-		ok.label = "Send form";
-		containerWrapper.add(ok, "sx 4, align right, gaptop 10");
-
-
-		containerWrapper.invalidate();
-		stage.addEventListener(Event.RESIZE, resizeHandler);
-	}
+        var ok:Button = new Button();
+        ok.label = "Send form";
+        containerWrapper.add(ok, "sx 4, align right, gaptop 10");
 
 
-	private function resizeHandler(event:Event):void
-	{
-		containerWrapper.invalidate();
-	}
+        containerWrapper.invalidate();
+        stage.addEventListener(Event.RESIZE, resizeHandler);
+    }
+
+
+    private function resizeHandler(event:Event):void
+    {
+        containerWrapper.invalidate();
+    }
 
 }
 }
