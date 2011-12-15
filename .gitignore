@@ -3,6 +3,6 @@ Thumbs.db
 
 .idea
 *.iml
-
+*.fla
 target
-
+/out/
