@@ -25,7 +25,7 @@ public class FlashMain extends Sprite
 		stage.scaleMode = StageScaleMode.NO_SCALE;
 		stage.align = StageAlign.TOP_LEFT;
 
-		var layout:MigLayout = new MigLayout("debug, wrap 4, ins 5 5% 0 5%", "[align right][grow][][grow]");
+		var layout:MigLayout = new MigLayout("debug, wrap 4, ins 20", "[align right][grow][][grow]");
 		containerWrapper = new FlashContainerWrapper(this, layout);
 
 		var lblFirstName:TestTextField = new TestTextField("Fist name");
