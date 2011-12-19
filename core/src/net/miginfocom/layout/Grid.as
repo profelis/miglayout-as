@@ -73,15 +73,16 @@ public final class Grid {
 	 */
 	//private LinkedHashMap<Integer, Cell> grid = new LinkedHashMap<Integer, Cell>();   // [(y << 16) + x] -> Cell. null key for absolute positioned compwraps
   // must be Array, not Vector — we need sparse array
-	private const grid:Array = [];   // [(y << 16) + x] -> Cell. null key for absolute positioned compwraps
+  private static const ABSOLUTE_POSITIONED_CELL_KEY:String = "apc";
+	private const grid:Array = [];   // [(y << 16) + x] -> Cell. null key for absolute positioned compwraps CHANGED: in ActionScript all not-integer keys casted to String, so, we use "apc" (see ABSOLUTE_POSITIONED_CELL_KEY) as key instead of null
 
 	//private HashMap<Integer, BoundSize> wrapGapMap = null;   // Row or Column index depending in the dimension that "wraps". Normally row indexes but may be column indexes if "flowy". 0 means before first row/col.
-	private var wrapGapMap:Array;   // Row or Column index depending in the dimension that "wraps". Normally row indexes but may be column indexes if "flowy". 0 means before first row/col.
+	private var wrapGapMap:Dictionary;   // Row or Column index depending in the dimension that "wraps". Normally row indexes but may be column indexes if "flowy". 0 means before first row/col.
 
 	/** The size of the grid. Row count and column count.
 	 */
 	//private TreeSet<Integer> rowIndexes = new TreeSet<Integer>(), colIndexes = new TreeSet<Integer>();
-	private var rowIndexes:Array = [], colIndexes:Array = [];
+	private const rowIndexes:Array = [], colIndexes:Array = [];
 
 	/** The row and column specifications.
 	 */
@@ -191,9 +192,9 @@ public final class Grid {
       var cbSz:Vector.<BoundSize> = getCallbackSize(comp);
       if (pos != null || rootCc.external) {
 				cw = new CompWrap(comp, rootCc, hideMode, pos, cbSz, container);
-				cell = grid[null];
+				cell = grid[ABSOLUTE_POSITIONED_CELL_KEY];
         if (cell == null) {
-          grid[null] = new Cell(cw);
+          grid[ABSOLUTE_POSITIONED_CELL_KEY] = new Cell(cw);
         }
         else {
           cell.compWraps[cell.compWraps.length] = cw;
@@ -424,7 +425,7 @@ public final class Grid {
 		}
 
     if (hasTagged) {
-      sortCellsByPlatform(grid.values(), container);
+      sortCellsByPlatform(grid, container);
     }
 
 		// Calculate gaps now that the cells are filled and we know all adjacent components.
@@ -738,7 +739,7 @@ public final class Grid {
 
     if (gapSize != null) {
       if (wrapGapMap == null) {
-        wrapGapMap = [];
+        wrapGapMap = new Dictionary();
       }
 
       wrapGapMap[cellXY[flowx ? 1 : 0]] = gapSize;
@@ -757,7 +758,7 @@ public final class Grid {
 	 * @param cells The cells to sort.
 	 * @param parent The parent.
 	 */
-	private static function sortCellsByPlatform(cells:Vector.<Cell>, parent:ContainerWrapper):void {
+	private static function sortCellsByPlatform(cells:Array, parent:ContainerWrapper):void {
 		var order:String = PlatformDefaults.buttonOrder;
     var orderLo:String = order.toLowerCase();
 
@@ -978,7 +979,7 @@ public final class Grid {
   private function adjustSizeForAbsolute(isHor:Boolean):void {
     var curSizes:Vector.<int> = isHor ? _width : _height;
 
-    var absCell:Cell = grid[null];
+    var absCell:Cell = grid[ABSOLUTE_POSITIONED_CELL_KEY];
     if (absCell == null || absCell.compWraps.length == 0) {
       return;
     }
@@ -1106,7 +1107,7 @@ public final class Grid {
         ixArr[ix++] = int(adobeBurnInHell);
       }
 
-      putSizesAndIndexes(container.component, rowColSizes, ixArr, isRows);
+      //putSizesAndIndexes(container.component, rowColSizes, ixArr, isRows);
     }
 
     var curPos:int = align != null ? align.getPixels(refSize - LayoutUtil.sum(rowColSizes, 0, rowColSizes.length), container, null) : 0;
@@ -1995,12 +1996,12 @@ public final class Grid {
         var y:int = xyInt >> 16;
 
         for each (var cw:CompWrap in cell.compWraps) {
-          weakCells[weakCellsLength++] = new WeakCell(cw.comp.component, x, y, cell.spanx, cell.spany);
+          //weakCells[weakCellsLength++] = new WeakCell(cw.comp.component, x, y, cell.spanx, cell.spany);
         }
       }
 		}
 
-		PARENT_GRIDPOS_MAP[parComp.component] = weakCells;
+		//PARENT_GRIDPOS_MAP[parComp.component] = weakCells;
 	}
 
   internal static function getGridPositions(parComp:Object):Dictionary {
