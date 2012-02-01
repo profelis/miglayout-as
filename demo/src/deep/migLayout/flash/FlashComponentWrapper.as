@@ -108,16 +108,6 @@ public class FlashComponentWrapper implements ComponentWrapper
         return false;
     }
 
-    public function get horizontalScreenDPI():Number
-    {
-        return PlatformDefaults.defaultDPI;
-    }
-
-    public function get verticalScreenDPI():Number
-    {
-        return PlatformDefaults.defaultDPI;
-    }
-
     public function get linkId():String
     {
         return null;
@@ -128,7 +118,7 @@ public class FlashComponentWrapper implements ComponentWrapper
         return LayoutUtil.calculateHash(this);
     }
 
-    public function get visualPadding():Vector.<Number>
+    public function get visualPadding():Vector.<int>
     {
         return null;
     }

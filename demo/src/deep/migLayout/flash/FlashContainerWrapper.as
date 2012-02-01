@@ -11,6 +11,7 @@ import net.miginfocom.layout.ComponentWrapper;
 import net.miginfocom.layout.ConstraintParser;
 import net.miginfocom.layout.ContainerWrapper;
 import net.miginfocom.layout.ContainerWrappers;
+import net.miginfocom.layout.PlatformDefaults;
 
 public final class FlashContainerWrapper extends FlashComponentWrapper implements ContainerWrapper
 {
@@ -31,7 +32,7 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
         return h;
     }
 
-    function FlashContainerWrapper(c:DisplayObjectContainer, layout:MigLayout)
+    function FlashContainerWrapper(c:DisplayObjectContainer, layout:FlashMigLayout)
     {
         _cont = c;
         super(c, null);
@@ -53,7 +54,7 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
         return _components.length;
     }
 
-    private var _layout:MigLayout;
+    private var _layout:FlashMigLayout;
     private var _invalid:Boolean;
 
     public function getLayout():Object
@@ -76,7 +77,7 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
         return 0;
     }
 
-    public function add(component:DisplayObject, constraints:Object = null):void
+    public function addChild(component:DisplayObject, constraints:Object = null):void
     {
         if (getComponentWrapper(component)) return;
         constraints ||= "";
@@ -91,7 +92,7 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
         invalidate();
     }
 
-    public function remove(component:DisplayObject):Boolean
+    public function removeChild(component:DisplayObject):Boolean
     {
         var wrapper:FlashComponentWrapper = getComponentWrapper(component);
         if (wrapper)
@@ -162,6 +163,16 @@ public final class FlashContainerWrapper extends FlashComponentWrapper implement
         _invalid = false;
         c.removeEventListener(Event.ENTER_FRAME, onEnterFrame);
         layoutContainer();
+    }
+
+    public function get horizontalScreenDPI():Number
+    {
+        return PlatformDefaults.defaultDPI;
+    }
+
+    public function get verticalScreenDPI():Number
+    {
+        return PlatformDefaults.defaultDPI;
     }
 }
 }

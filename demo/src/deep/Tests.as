@@ -1,65 +1,62 @@
 package deep
 {
-import deep.migLayout.flash.FlashContainerWrapper;
-import deep.migLayout.flash.MigLayout;
+import deep.migLayout.Component;
+import deep.migLayout.Container;
+import deep.migLayout.MigLayout;
+import deep.migLayout.flash.FlashComponent;
+import deep.tests.BigSizeTest;
 import deep.tests.HorizontalTest;
 
 import fl.controls.Button;
 
 import flash.display.DisplayObject;
-import flash.display.Sprite;
-import flash.display.StageAlign;
-import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.events.MouseEvent;
 
 /**
  * @author Dima Granetchi <system.grand@gmail.com>, <deep@e-citrus.ru>
  */
-public class Tests extends Sprite
+public class Tests extends Container
 {
     private var tests:Vector.<TestData> = new Vector.<TestData>();
-    private var testView:DisplayObject;
-    private var menu:Sprite;
+    private var testView:Component;
+    private var menu:Container;
 
     public function Tests()
     {
-        super();
+        super(new MigLayout("debug", "[][grow]", "[top, 100%]"));
 
-        stage.scaleMode = StageScaleMode.NO_SCALE;
-        stage.align = StageAlign.TOP_LEFT;
+        Container.formatStage(stage);
 
         registerTest("Horizontal", HorizontalTest);
+        registerTest("BigSize", BigSizeTest);
 
         init();
     }
 
     private function init():void
     {
-        menu = new Sprite();
-        addChild(menu);
-        var menuLayout:MigLayout = new MigLayout("wrap, ins 0", "[left]", "");
-        var menuContainer:FlashContainerWrapper = new FlashContainerWrapper(menu, menuLayout);
+        menu = new Container(new MigLayout("debug, wrap, ins 0", "[left]", ""));
 
         for each (var test:TestData in tests)
         {
             var b:Button = new Button();
-            menuContainer.add(b);
+            menu.add(new FlashComponent(b));
             b.label = test.name;
             b.name = test.name;
             b.addEventListener(MouseEvent.CLICK, onTestButtonClick);
         }
-        menuContainer.layoutContainer();
 
-        stage.addEventListener(Event.RESIZE, onResize);
+        add(menu);
+
+        stage.addEventListener(Event.RESIZE, onStageResize);
+        onStageResize(null);
     }
 
-    private function onResize(event:Event):void
+    private function onStageResize(event:Event):void
     {
-        if (testView)
-        {
-            testView.width = stage.stageWidth - testView.x;
-        }
+        width = stage.stageWidth;
+        height = stage.stageHeight;
     }
 
     private function onTestButtonClick(event:MouseEvent):void
@@ -76,15 +73,13 @@ public class Tests extends Sprite
     {
         if (testView)
         {
-            removeChild(testView);
+            remove(testView);
             testView = null;
         }
 
         if (test)
         {
-            addChild(testView = test.displayObject);
-            testView.x = menu.width + 5;
-            onResize(null);
+            add(testView = test.container);
         }
     }
 
@@ -95,7 +90,7 @@ public class Tests extends Sprite
 }
 }
 
-import flash.display.DisplayObject;
+import deep.migLayout.Container;
 
 class TestData
 {
@@ -109,7 +104,7 @@ class TestData
         this.ref = ref;
     }
 
-    public function get displayObject():DisplayObject
+    public function get container():Container
     {
         return new ref();
     }

@@ -1,46 +1,19 @@
 package deep.tests
 {
-import flash.display.Sprite;
+import deep.migLayout.Container;
+import deep.migLayout.MigLayout;
 
 /**
  * @author Dima Granetchi <system.grand@gmail.com>, <deep@e-citrus.ru>
  */
-public class AbstractTest extends Sprite
+public class AbstractTest extends Container
 {
-    protected var _width:Number;
-    protected var _height:Number;
 
-    public function AbstractTest()
+    public function AbstractTest(layout:MigLayout)
     {
+        super(layout);
     }
 
 
-    protected function invalidateSize():void
-    {
-
-    }
-
-
-    override public function get width():Number
-    {
-        return _width;
-    }
-
-    override public function get height():Number
-    {
-        return _height;
-    }
-
-    override public function set width(value:Number):void
-    {
-        _width = value;
-        invalidateSize();
-    }
-
-    override public function set height(value:Number):void
-    {
-        _height = value;
-        invalidateSize();
-    }
 }
 }

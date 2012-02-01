@@ -1,9 +1,9 @@
 package deep.tests
 {
 import deep.TestTextField;
+import deep.migLayout.MigLayout;
 import deep.migLayout.fl.UIComponentWrapper;
-import deep.migLayout.flash.FlashContainerWrapper;
-import deep.migLayout.flash.MigLayout;
+import deep.migLayout.flash.FlashComponent;
 
 import fl.controls.Button;
 
@@ -14,30 +14,27 @@ import flash.display.DisplayObject;
  */
 public class HorizontalTest extends AbstractTest
 {
-    private var container:FlashContainerWrapper;
-
     {
         UIComponentWrapper.register();
     }
 
     public function HorizontalTest()
     {
-        var layout:MigLayout = new MigLayout("debug, wrap", "[left]15[center]15[right]15[fill]15[]", "rel[]rel");
+        super(new MigLayout("debug, wrap", "[left]15[center]15[right]15[fill]15[]", "rel[]rel"));
 
         var labels:Vector.<String> = new <String>["left", "center", "right", "fill", "[]"];
         var buttons:Vector.<String> = new <String>["First name", "Phone number", "Avatar", "Email", "Address"];
-        container = new FlashContainerWrapper(this, layout);
 
         for each (var label:String in labels)
         {
-            container.add(createLabel(label));
+            add(new FlashComponent(createLabel(label)));
         }
 
         for (var i:int = 0; i < labels.length; i++)
         {
             for each (var name:String in buttons)
             {
-                container.add(createButton(buttons[i]));
+                add(new FlashComponent(createButton(buttons[i])));
             }
         }
     }
@@ -53,11 +50,6 @@ public class HorizontalTest extends AbstractTest
         b.label = label;
         b.setSize(label.length * 12, b.height);
         return b;
-    }
-
-    override protected function invalidateSize():void
-    {
-        container.invalidate();
     }
 }
 }
