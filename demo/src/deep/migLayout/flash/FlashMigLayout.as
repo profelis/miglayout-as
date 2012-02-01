@@ -8,14 +8,14 @@ import net.miginfocom.layout.LayoutCallback;
 import net.miginfocom.layout.LayoutUtil;
 import net.miginfocom.layout.PlatformDefaults;
 
-public class MigLayout extends AbstractMigLayout
+public class FlashMigLayout extends AbstractMigLayout
 {
     private var lastHash:int = -1;
     private var lastInvalidW:Number;
     private var lastInvalidH:Number;
     private var _callbacks:Vector.<LayoutCallback>;
 
-    public function MigLayout(layoutConstraints:String = null, colConstraints:String = null, rowConstraints:String = null)
+    public function FlashMigLayout(layoutConstraints:String = null, colConstraints:String = null, rowConstraints:String = null)
     {
         _callbacks = new Vector.<LayoutCallback>();
         super(layoutConstraints, colConstraints, rowConstraints);
