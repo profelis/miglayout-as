@@ -24,9 +24,8 @@ public class Container extends Component implements ContainerWrapper
     protected var _layout:MigLayout;
     private var _components:Vector.<Component> = new Vector.<Component>();
 
-    public function Container(layout:MigLayout = null)
+    public function Container(layout:MigLayout)
     {
-        scrollRect = new Rectangle(0, 0, 100, 100);
         super();
         this.layout = layout;
     }
@@ -98,14 +97,12 @@ public class Container extends Component implements ContainerWrapper
 
     override public function getPreferredWidth(hHint:int = -1):int
     {
-        if (_layout) return _layout.preferredLayoutWidth(this, LayoutUtil.PREF);
-        return super.getPreferredWidth(hHint);
+        return _layout.preferredLayoutWidth(this, LayoutUtil.PREF);
     }
 
     override public function getPreferredHeight(wHint:int = -1):int
     {
-        if (_layout) return _layout.preferredLayoutHeight(this, LayoutUtil.PREF);
-        return super.getPreferredHeight(wHint);
+        return _layout.preferredLayoutHeight(this, LayoutUtil.PREF);
     }
 
     public function get screenLocationX():Number
@@ -182,18 +179,6 @@ public class Container extends Component implements ContainerWrapper
     override public function getComponentType(disregardScrollPane:Boolean):int
     {
         return ComponentType.TYPE_CONTAINER;
-    }
-
-    override public function set width(value:Number):void
-    {
-        super.width = value;
-        scrollRect = new Rectangle(0, 0, value, height);
-    }
-
-    override public function set height(value:Number):void
-    {
-        super.height = value;
-        scrollRect = new Rectangle(0, 0, width, value);
     }
 }
 }

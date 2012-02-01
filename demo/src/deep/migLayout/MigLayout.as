@@ -11,7 +11,6 @@ public class MigLayout extends AbstractMigLayout
     private var lastHash:int = -1;
     private var _callbacks:Vector.<LayoutCallback>;
 
-    private const CONTAINER_SIZE_INVALID:uint = 1 << 1;
     private var lastInvalidW:int;
     private var lastInvalidH:int;
 
@@ -23,27 +22,30 @@ public class MigLayout extends AbstractMigLayout
 
     public function layoutContainer(container:Container):void
     {
-        checkCache(container);
+
 
         var w:Number = container.width;
         var h:Number = container.height;
 
-        if (grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, true))
+        if (checkCache(container))
         {
-            grid = null;
-            checkCache(container);
-            grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, false);
+            if (grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, true))
+            {
+                grid = null;
+                checkCache(container);
+                grid.layout(0, 0, w, h, lc != null && lc.debugMillis > 0, false);
+            }
         }
     }
 
     /** Check if something has changed and if so recreate it to the cached objects.
      * @param container The container that is the target for this layout manager.
      */
-    private function checkCache(container:Container):void
+    private function checkCache(container:Container):Boolean
     {
         if (container == null)
         {
-            return;
+            return false;
         }
 
         if ((flags & INVALID) != 0)
@@ -83,14 +85,12 @@ public class MigLayout extends AbstractMigLayout
             lastInvalidH = container.actualHeight;
         }
 
-        //setDebug(par, getDebugMillis() > 0);
-
         if (grid == null)
         {
             grid = new Grid(container, lc, rowSpecs, colSpecs, _callbacks);
         }
 
-        flags &= ~CONTAINER_SIZE_INVALID;
+        return true;
     }
 
     public function preferredLayoutWidth(container:Container, sizeType:int):Number
@@ -112,12 +112,6 @@ public class MigLayout extends AbstractMigLayout
         _callbacks.push(lc);
     }
 
-    //private function calculateSize(container:FlashContainerWrapper, sizeType:int) {
-    //  checkCache(container);
-    //  var w:Number = LayoutUtil.getSizeSafe(grid != null ? grid.width : null, sizeType);
-    //  var h:Number = LayoutUtil.getSizeSafe(grid != null ? grid.height : null, sizeType);
-    //  return new Dimension(w, h);
-    //}
 }
 }
 

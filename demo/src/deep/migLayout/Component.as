@@ -134,7 +134,7 @@ public class Component extends Sprite implements ComponentWrapper
 
     public function get linkId():String
     {
-        return null;
+        return name;
     }
 
     public function get layoutHashCode():int
