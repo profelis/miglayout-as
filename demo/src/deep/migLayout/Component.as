@@ -6,8 +6,8 @@ import flash.utils.getTimer;
 
 import net.miginfocom.layout.CC;
 import net.miginfocom.layout.ComponentType;
-
 import net.miginfocom.layout.ComponentWrapper;
+import net.miginfocom.layout.ConstraintParser;
 import net.miginfocom.layout.LayoutUtil;
 
 /**
@@ -23,9 +23,10 @@ public class Component extends Sprite implements ComponentWrapper
 
     private var _constraints:CC;
 
-    public function Component(constraints:CC = null)
+    public function Component(constraints:Object = null)
     {
-        this.constraints = constraints;
+        constraints ||= "";
+        this.constraints = (constraints is String) ? ConstraintParser.parseComponentConstraint(String(constraints)) : CC(constraints);
     }
 
     public function invalidate():void

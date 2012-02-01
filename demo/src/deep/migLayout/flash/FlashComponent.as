@@ -4,6 +4,8 @@ import deep.migLayout.Component;
 
 import flash.display.DisplayObject;
 
+import net.miginfocom.layout.CC;
+
 /**
  * @author Dima Granetchi <system.grand@gmail.com>, <deep@e-citrus.ru>
  */
@@ -11,10 +13,10 @@ public class FlashComponent extends Component
 {
     private var _child:DisplayObject;
     
-    public function FlashComponent(child:DisplayObject)
+    public function FlashComponent(child:DisplayObject, constraints:Object = null)
     {
         _child = child;
-        super();
+        super(constraints);
         _width = child.width;
         _height = child.height;
         addChild(child);

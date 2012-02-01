@@ -5,11 +5,8 @@ import flash.display.StageAlign;
 import flash.display.StageScaleMode;
 import flash.events.Event;
 import flash.geom.Point;
-import flash.geom.Rectangle;
-import flash.geom.Rectangle;
 
 import net.miginfocom.layout.ComponentType;
-
 import net.miginfocom.layout.ComponentWrapper;
 import net.miginfocom.layout.ContainerWrapper;
 import net.miginfocom.layout.ContainerWrappers;

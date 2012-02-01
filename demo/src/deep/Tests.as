@@ -5,6 +5,7 @@ import deep.migLayout.Container;
 import deep.migLayout.MigLayout;
 import deep.migLayout.flash.FlashComponent;
 import deep.tests.BigSizeTest;
+import deep.tests.FormTest;
 import deep.tests.HorizontalTest;
 
 import fl.controls.Button;
@@ -24,12 +25,13 @@ public class Tests extends Container
 
     public function Tests()
     {
-        super(new MigLayout("debug", "[][grow]", "[top, 100%]"));
+        super(new MigLayout("debug", "[][grow, fill]", "[top, 100%]"));
 
         Container.formatStage(stage);
 
         registerTest("Horizontal", HorizontalTest);
         registerTest("BigSize", BigSizeTest);
+        registerTest("FormTest", FormTest);
 
         init();
     }

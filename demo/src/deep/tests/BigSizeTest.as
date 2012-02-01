@@ -19,7 +19,7 @@ public class BigSizeTest extends AbstractTest
         height = 20;
 
         var button:Button = new Button();
-        button.label = "layout 20x20, button 200x100";
+        button.label = "<- layout 20x20, button 200x100 ->";
         button.setSize(200, 100);
         var flashComponent:FlashComponent = new FlashComponent(button);
         add(flashComponent);
