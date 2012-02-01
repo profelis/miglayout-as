@@ -9,6 +9,7 @@ import net.miginfocom.layout.ComponentWrapper;
 import net.miginfocom.layout.LayoutUtil;
 import net.miginfocom.layout.PlatformDefaults;
 
+[Deprecated]
 public class FlashComponentWrapper implements ComponentWrapper
 {
     protected var c:DisplayObject;

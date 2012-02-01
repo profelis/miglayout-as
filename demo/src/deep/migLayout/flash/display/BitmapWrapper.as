@@ -11,6 +11,7 @@ import net.miginfocom.layout.ComponentType;
 /**
  * @author Dima Granetchi <system.grand@gmail.com>, <deep@e-citrus.ru>
  */
+[Deprecated]
 public class BitmapWrapper extends FlashComponentWrapper
 {
     private var _bitmap:Bitmap;

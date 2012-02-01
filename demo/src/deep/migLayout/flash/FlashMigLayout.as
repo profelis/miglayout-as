@@ -8,6 +8,7 @@ import net.miginfocom.layout.LayoutCallback;
 import net.miginfocom.layout.LayoutUtil;
 import net.miginfocom.layout.PlatformDefaults;
 
+[Deprecated]
 public class FlashMigLayout extends AbstractMigLayout
 {
     private var lastHash:int = -1;

@@ -13,6 +13,7 @@ import net.miginfocom.layout.ContainerWrapper;
 import net.miginfocom.layout.ContainerWrappers;
 import net.miginfocom.layout.PlatformDefaults;
 
+[Deprecated]
 public final class FlashContainerWrapper extends FlashComponentWrapper implements ContainerWrapper
 {
     internal var w:int;

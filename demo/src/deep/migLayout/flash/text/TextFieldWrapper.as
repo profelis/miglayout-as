@@ -13,6 +13,7 @@ import net.miginfocom.layout.ComponentType;
 /**
  * @author Dima Granetchi <system.grand@gmail.com>, <deep@e-citrus.ru>
  */
+[Deprecated]
 public class TextFieldWrapper extends FlashComponentWrapper
 {
     protected var _textField:TextField;

@@ -10,6 +10,7 @@ import net.miginfocom.layout.CC;
 /**
  * @author Dima Granetchi <system.grand@gmail.com>, <deep@e-citrus.ru>
  */
+[Deprecated]
 public class UIComponentWrapper extends FlashComponentWrapper
 {
     private var _control:UIComponent;
