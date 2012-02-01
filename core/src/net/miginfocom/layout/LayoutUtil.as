@@ -24,7 +24,6 @@ public final class LayoutUtil {
   public static const MAX:int = 2;
 
   private static var CR_MAP:Dictionary/*<Object, String>*/ = null;
-//	private static WeakHashMap<Object, Boolean> DT_MAP = null;      // The Containers that have design time. Value not used.
   private static var eSz:int = 0;
   private static var _globalDebugMillis:int = 0;
 
@@ -58,44 +57,6 @@ public final class LayoutUtil {
     _globalDebugMillis = value;
   }
 
-  ///** Sets if design time is turned on for a Container in {@link ContainerWrapper}.
-  // * @param cw The container to set design time for. <code>null</code> is legal and can be used as
-  // * a key to turn on/off design time "in general". Note though that design time "in general" is
-  // * always on as long as there is at least one ContainerWrapper with design time.
-  // * <p>
-  // * <strong>If this method has not ever been called it will default to what
-  // * <code>Beans.isDesignTime()</code> returns.</strong> This means that if you call
-  // * this method you indicate that you will take responsibility for the design time value.
-  // * @param b <code>true</code> means design time on.
-  // */
-//	public static void setDesignTime(ContainerWrapper cw, boolean b)
-//	{
-//		if (DT_MAP == null)
-//			DT_MAP = new WeakHashMap<Object, Boolean>();
-//
-//		DT_MAP.put((cw != null ? cw.getComponent() : null), new Boolean(b));
-//	}
-
-  //noinspection JSUnusedLocalSymbols
-  /**
-   * Returns if design time is turned on for a Container in {@link ContainerWrapper}.
-   * @param cw The container to set design time for. <code>null</code> is legal will return <code>true</code>
-   * if there is at least one <code>ContainerWrapper</code> (or <code>null</code>) that have design time
-   * turned on.
-   * @return If design time is set for <code>cw</code>.
-   */
-  public static function isDesignTime(cw:ContainerWrapper):Boolean {
-    return false;
-//		if (DT_MAP == null)
-//			return Beans.isDesignTime();
-//
-//		if (cw != null && DT_MAP.containsKey(cw.getComponent()) == false)
-//			cw = null;
-//
-//		Boolean b = DT_MAP.get(cw != null ? cw.getComponent() : null);
-//		return b != null && b.booleanValue();
-  }
-
   /**
    * The size of an empty row or columns in a grid during design time.
    * @return The number of pixels. Default is 15.
@@ -119,12 +80,14 @@ public final class LayoutUtil {
    * probably have an equals method that compares identities or <code>con</code> objects that .equals() will only
    * be able to have <b>one</b> creation string.
    * <p>
-   * If {@link LayoutUtil#isDesignTime(ContainerWrapper)} returns <code>false</code> the method does nothing.
    * @param con The object. if <code>null</code> the method does nothing.
    * @param s The creation string. if <code>null</code> the method does nothing.
    */
   internal static function putCCString(con:Object, s:String):void {
-    if (s != null && con != null && isDesignTime(null)) {
+    return;
+    //if (s != null && con != null && isDesignTime(null)) {
+    //noinspection UnreachableCodeJS
+    if (s != null && con != null) {
       if (CR_MAP == null) {
         CR_MAP = new Dictionary(true);
       }
